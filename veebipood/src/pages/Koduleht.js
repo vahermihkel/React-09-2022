@@ -17,6 +17,7 @@ function Koduleht() {
   // semikoolon ei ole javascriptis vajalik
   // semikoolon tähistab rea lõppu
   const [kogus, uuendaKogus] = useState(3);
+  const [keel, uuendaKeel] = useState(localStorage.getItem("keel") || "est");
   // vasakpoolne on muutuja
   // parempoolne on funktsioon mille abil saan
   //       vasakpoolset muutujat muuta
@@ -34,6 +35,23 @@ function Koduleht() {
     uuendaKogus( kogus + 1 );
   }
 
+  const muudaKeelEST = () => {
+    uuendaKeel("est");
+    localStorage.setItem("keel","est");
+  }
+
+  const muudaKeelENG = () => {
+    uuendaKeel("eng");
+    localStorage.setItem("keel","eng");
+  }
+
+  const muudaKeelRUS = () => {
+    uuendaKeel("rus");
+    localStorage.setItem("keel","rus");
+  }
+
+  // parem klõps -> inspect -> Application (Chrome + Edge)     Storage (Firefox)
+
   return ( 
     <div>
       <div>Olen kodulehe lehel</div>
@@ -42,7 +60,30 @@ function Koduleht() {
       <button onClick={v2henda}>-</button>
       <span>{kogus}</span>
       <button onClick={suurenda}>+</button>
+      <br /><br />
+      <button onClick={muudaKeelEST}>Eesti keelseks</button>
+      <button onClick={muudaKeelENG}>To English</button>
+      <button onClick={muudaKeelRUS}>Pycckuu</button>
+      { keel === "est" && <div>Eesti keelne leht</div>}
+      { keel === "eng" && <div>Inglise keelne leht</div>}
+      { keel === "rus" && <div>Vene keelne leht</div>}
     </div> );
 }
 
 export default Koduleht;
+
+// tumesinine - uue kuulutamine, liigi andmine - const, function, let
+// sinine - minu loodud muutuja
+// helesinine - JS enda loodud muutuja
+// kollane - funktsioon
+// punane/oranž - jutumärkides väärtus
+
+// {} - HTMLs JavaScripti kasutamiseks
+// {} - JavaScriptis koodiblokkide loomiseks
+// const funktsioon = () => {}        if (true) {} else {}
+// [] - useState sees vasak pool ja parem pool
+// || - OR märk ;   kui on vasakul pool tühjus, võta parem pool
+// && - AND märk ; kui on vasakul pool tõde, tee ka parem pool
+// ; - semikoolon ; rea lõpetamiseks
+// () => { }   - funktsiooni tähistus JavaScriptis
+// () - funktsiooni käimapanemiseks
