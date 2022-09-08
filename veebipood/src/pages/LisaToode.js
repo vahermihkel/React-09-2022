@@ -16,9 +16,9 @@ function LisaToode() {
     console.log(nimiRef.current.value);
     // avan lehel parem klõps -> inspect -> console
     if (nimiRef.current.value === "") {
-      uuendaS6num("Tühja nimega ei saa uut toodet lisada!")
+      uuendaS6num("Tühja nimega ei saa uut toodet lisada!");
     } else {
-      uuendaS6num("Uus toode lisatud!")
+      uuendaS6num("Uus toode lisatud!");
     }
   }
 

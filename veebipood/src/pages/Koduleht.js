@@ -18,6 +18,9 @@ function Koduleht() {
   // semikoolon tähistab rea lõppu
   const [kogus, uuendaKogus] = useState(3);
   const [keel, uuendaKeel] = useState(localStorage.getItem("keel") || "est");
+
+  // alt gr + <
+
   // vasakpoolne on muutuja
   // parempoolne on funktsioon mille abil saan
   //       vasakpoolset muutujat muuta

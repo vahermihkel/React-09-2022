@@ -4,6 +4,8 @@ import Koduleht from './pages/Koduleht';
 import LisaToode from './pages/LisaToode';
 import Meist from './pages/Meist';
 import Ostukorv from './pages/Ostukorv';
+import Poed from './pages/Poed';
+import Seaded from './pages/Seaded';
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
       <Link to="/lisa-toode">
         <button>Lisa toode</button>
       </Link>
+      <Link to="/seaded">
+        <button>Seaded</button>
+      </Link>
+      <Link to="/poed">
+        <button>Poed</button>
+      </Link>
 
 {/* path="" <-- mis järgneb localhost:3000le
 localhost:3000/ostukorv    -----     <div>Olen ostukorvis</div> */}
@@ -31,6 +39,8 @@ localhost:3000/ostukorv    -----     <div>Olen ostukorvis</div> */}
         <Route path="ostukorv" element={ <Ostukorv /> } />
         <Route path="meist" element={ <Meist /> } />
         <Route path="lisa-toode" element={ <LisaToode /> } />
+        <Route path="seaded" element={ <Seaded /> } />
+        <Route path="poed" element={ <Poed /> } />
       </Routes>
     </div>
   );
