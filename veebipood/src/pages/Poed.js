@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import andjateFail from "../nimed.json";
+// import andjateFail from "../nimed.json";
 
 function Poed() {
-  const [poed, uuendaPoed] = useState(andjateFail);
+  const [poed, uuendaPoed] = useState(["Õismäe", "Kristiine", "Lasnamäe"]);
   // const [sortAZ, setSortAZ] = useState(false);
   const poodRef = useRef();
 

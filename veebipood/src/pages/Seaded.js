@@ -7,6 +7,8 @@ function Seaded() {
   const defaultAddress = localStorage.getItem("address");
 
   const uuendaSeaded = () => {
+    // tel     |     51312312
+    // address |     Mustamäe
     localStorage.setItem("tel", telRef.current.value);  // localStorage.getItem("tel");
     localStorage.setItem("address", addressRef.current.value);  // localStorage.getItem("address");
   }

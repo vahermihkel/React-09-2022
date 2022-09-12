@@ -1,5 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Avaleht from './pages/Avaleht';
 import Koduleht from './pages/Koduleht';
 import LisaToode from './pages/LisaToode';
 import Meist from './pages/Meist';
@@ -15,6 +16,9 @@ function App() {
     
       <Link to="/">
         <button>Avalehele</button>
+      </Link>
+      <Link to="/koduleht">
+        <button>Koduleht</button>
       </Link>
       <Link to="/ostukorv">
         <button>Ostukorvi</button>
@@ -35,7 +39,8 @@ function App() {
 {/* path="" <-- mis järgneb localhost:3000le
 localhost:3000/ostukorv    -----     <div>Olen ostukorvis</div> */}
       <Routes>
-        <Route path="" element={ <Koduleht /> } />
+        <Route path="" element={ <Avaleht /> } />
+        <Route path="koduleht" element={ <Koduleht /> } />
         <Route path="ostukorv" element={ <Ostukorv /> } />
         <Route path="meist" element={ <Meist /> } />
         <Route path="lisa-toode" element={ <LisaToode /> } />

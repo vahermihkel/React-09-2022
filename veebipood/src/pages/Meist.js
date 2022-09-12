@@ -5,8 +5,8 @@ import { useState } from "react";
 
 // ffc + enter
 function Meist() {
-  const telephone = localStorage.getItem("tel");
-  const address = localStorage.getItem("address");
+  const telephone = localStorage.getItem("tel"); // võtab viimase .setItem abil lisatud väärtuse
+  const address = localStorage.getItem("address"); // võtab viimase .setItem abil lisatud väärtuse
   const [showTel, setShowTel] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
 

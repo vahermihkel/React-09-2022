@@ -38,19 +38,24 @@ function Koduleht() {
     uuendaKogus( kogus + 1 );
   }
 
-  const muudaKeelEST = () => {
-    uuendaKeel("est");
-    localStorage.setItem("keel","est");
-  }
+  // const muudaKeelEST = () => {
+  //   uuendaKeel("est");
+  //   localStorage.setItem("keel","est");
+  // }
 
-  const muudaKeelENG = () => {
-    uuendaKeel("eng");
-    localStorage.setItem("keel","eng");
-  }
+  // const muudaKeelENG = () => {
+  //   uuendaKeel("eng");
+  //   localStorage.setItem("keel","eng");
+  // }
 
-  const muudaKeelRUS = () => {
-    uuendaKeel("rus");
-    localStorage.setItem("keel","rus");
+  // const muudaKeelRUS = () => {
+  //   uuendaKeel("rus");
+  //   localStorage.setItem("keel","rus");
+  // }
+
+  const muudaKeel = (uusKeel) => {
+    uuendaKeel(uusKeel);
+    localStorage.setItem("keel", uusKeel);
   }
 
   // parem klõps -> inspect -> Application (Chrome + Edge)     Storage (Firefox)
@@ -64,9 +69,9 @@ function Koduleht() {
       <span>{kogus}</span>
       <button onClick={suurenda}>+</button>
       <br /><br />
-      <button onClick={muudaKeelEST}>Eesti keelseks</button>
-      <button onClick={muudaKeelENG}>To English</button>
-      <button onClick={muudaKeelRUS}>Pycckuu</button>
+      <button onClick={() => muudaKeel("est")}>Eesti keelseks</button>
+      <button onClick={() => muudaKeel("eng")}>To English</button>
+      <button onClick={() => muudaKeel("rus")}>Pycckuu</button>
       { keel === "est" && <div>Eesti keelne leht</div>}
       { keel === "eng" && <div>Inglise keelne leht</div>}
       { keel === "rus" && <div>Vene keelne leht</div>}
@@ -74,6 +79,8 @@ function Koduleht() {
 }
 
 export default Koduleht;
+// Error: Too many re-renders. React limits the number of renders to prevent an infinite loop.
+// onClick={muudaKeel("dasdas")}   <--  () =>   puudu
 
 // tumesinine - uue kuulutamine, liigi andmine - const, function, let
 // sinine - minu loodud muutuja

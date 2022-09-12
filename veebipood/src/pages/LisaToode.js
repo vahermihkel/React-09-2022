@@ -19,8 +19,38 @@ function LisaToode() {
       uuendaS6num("Tühja nimega ei saa uut toodet lisada!");
     } else {
       uuendaS6num("Uus toode lisatud!");
+      // localStorage-sse lisada
+      // ["Samsung", "iPhone", "Xiaomi", ...]
+      // 1. võta juba olevad localStorage väärtused      .getItem()
+      //      .getItem võtab alati sõnalise tüübina väärtused    "["Samsung", "iPhone"]"
+      // 2a. võta jutumärgid maha       JSON.parse()
+      // 2b. kui on tühjus, võta tühi massiiv
+      // 3. lisa üks juurde           .push()
+      // 4. pane jutumärgid tagasi talle    JSON.stringify()
+      // 5. pane localStorage-sse tagasi    .setItem()
+      // ["Samsung", "iPhone"]
+      let tootedLS = localStorage.getItem("tooted");
+            console.log(tootedLS); // null   ----      "["Nobe"]"
+            console.log(typeof tootedLS); // object      string
+      tootedLS = JSON.parse(tootedLS) || []; 
+            console.log(tootedLS);  // []              ["Nobe"]
+            console.log(typeof tootedLS); // object     object
+      tootedLS.push(nimiRef.current.value);
+            console.log(tootedLS); // ["Nobe"]         ["Nobe", "Tesla"]
+            console.log(typeof tootedLS); // object     object
+      tootedLS = JSON.stringify(tootedLS);
+            console.log(tootedLS); // "["Nobe"]"       "["Nobe", "Tesla"]"
+            console.log(typeof tootedLS); // string     string
+      localStorage.setItem("tooted",tootedLS);
     }
   }
+
+  // .push is not a function
+  // .map is not a function
+  // Teeme valele tüübile seda funktsiooni
+
+  //     key     |          value
+  //   "tooted"  |    "["adasd","dasdas"]"
 
   return ( 
     <div>
