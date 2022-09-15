@@ -4,7 +4,7 @@ function Avaleht() {
   // tootedLS = JSON.parse(tootedLS) || [];
   const tooted = JSON.parse(localStorage.getItem("tooted")) || [];
 
-                        // Tesla
+                        // Tesla  -->   {nimi: "Tesla", hind: 1}
   const lisaOstukorvi = (klikitudToode) => {
     let ostukorvSS = sessionStorage.getItem("ostukorv");
     ostukorvSS = JSON.parse(ostukorvSS) || [];
@@ -13,12 +13,15 @@ function Avaleht() {
     sessionStorage.setItem("ostukorv", ostukorvSS);
   }
 
-    // ["Nobe", "Tesla", "BMW"]
+    // ["Nobe", "Tesla", "BMW"] --->  [{nimi: "Nobe", hind: 1}, {nimi: "Tesla", hind: 1}, {nimi: "BMW", hind: 1}] 
   return ( 
     <div>
       {tooted.map(element => 
-        <div key={element}>
-          <div>{element}</div>
+        <div key={element.nimi}>
+          {/* Objects are not valid as a React child (found: object with keys {nimi, hind, aktiivsus}) */}
+          <div>{element.nimi}</div>
+          <div>{element.hind}</div>
+          <div>{element.aktiivsus + 0}</div>
           <button onClick={() => lisaOstukorvi(element)}>Lisa ostukorvi</button>
         </div>
       )}

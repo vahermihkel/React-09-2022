@@ -7,6 +7,8 @@ function LisaToode() {
   // kui kirjutades ei tule, siis saab kirjutada valmis ja selle sõna lõpus vajutada
   //      ctrl + space
   const nimiRef = useRef();
+  const hindRef = useRef();
+  const aktiivsusRef = useRef();
         // ref läheb HTMLs input sisse
         // ref kuulab mida inputi sisse sisestatakse reaalajas
   const [s6num, uuendaS6num] = useState("Lisa uus toode!");
@@ -35,11 +37,15 @@ function LisaToode() {
       tootedLS = JSON.parse(tootedLS) || []; 
             console.log(tootedLS);  // []              ["Nobe"]
             console.log(typeof tootedLS); // object     object
-      tootedLS.push(nimiRef.current.value);
+      tootedLS.push({
+        nimi: nimiRef.current.value, 
+        hind: Number(hindRef.current.value), 
+        aktiivsus: aktiivsusRef.current.checked
+      });
             console.log(tootedLS); // ["Nobe"]         ["Nobe", "Tesla"]
             console.log(typeof tootedLS); // object     object
       tootedLS = JSON.stringify(tootedLS);
-            console.log(tootedLS); // "["Nobe"]"       "["Nobe", "Tesla"]"
+            console.log(tootedLS); // "[{nimi: "Nobe"}, hind: 32]"       "["Nobe", "Tesla"]"
             console.log(typeof tootedLS); // string     string
       localStorage.setItem("tooted",tootedLS);
     }
@@ -55,7 +61,12 @@ function LisaToode() {
   return ( 
     <div>
       <div>{s6num}</div>
-      <input ref={nimiRef} type="text" />
+      <label>Nimi</label> <br />
+      <input ref={nimiRef} type="text" /> <br />
+      <label>Hind</label> <br />
+      <input ref={hindRef} type="number" /> <br />
+      <label>Aktiivsus</label> <br />
+      <input ref={aktiivsusRef} type="checkbox" /> <br />
       <button onClick={lisaUusToode}>Lisa uus toode</button>
     </div> );
 }
