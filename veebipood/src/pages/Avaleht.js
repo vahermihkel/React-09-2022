@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 function Avaleht() {
   // let tootedLS = localStorage.getItem("tooted");
@@ -16,12 +17,15 @@ function Avaleht() {
     // ["Nobe", "Tesla", "BMW"] --->  [{nimi: "Nobe", hind: 1}, {nimi: "Tesla", hind: 1}, {nimi: "BMW", hind: 1}] 
   return ( 
     <div>
-      {tooted.map(element => 
+      {tooted.filter(element => element.aktiivsus === true).map(element => 
         <div key={element.nimi}>
           {/* Objects are not valid as a React child (found: object with keys {nimi, hind, aktiivsus}) */}
-          <div>{element.nimi}</div>
-          <div>{element.hind}</div>
-          <div>{element.aktiivsus + 0}</div>
+         {/* <Link to={"/toode/" + element.nimi}> */}
+         <Link to={`/toode/${element.nimi.toLowerCase().replaceAll(" ","-")}`}>
+            <div>{element.nimi}</div>
+            <div>{element.hind}</div>
+            <div>{element.aktiivsus + 0}</div>
+          </Link>
           <button onClick={() => lisaOstukorvi(element)}>Lisa ostukorvi</button>
         </div>
       )}

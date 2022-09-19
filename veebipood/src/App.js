@@ -1,12 +1,15 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Avaleht from './pages/Avaleht';
+import HaldaTooteid from './pages/HaldaTooteid';
 import Koduleht from './pages/Koduleht';
 import LisaToode from './pages/LisaToode';
 import Meist from './pages/Meist';
+import MuudaToode from './pages/MuudaToode';
 import Ostukorv from './pages/Ostukorv';
 import Poed from './pages/Poed';
 import Seaded from './pages/Seaded';
+import YksikToode from './pages/YksikToode';
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
       <Link to="/poed">
         <button>Poed</button>
       </Link>
+      <Link to="/halda-tooteid">
+        <button>Halda tooteid</button>
+      </Link>
 
 {/* path="" <-- mis järgneb localhost:3000le
 localhost:3000/ostukorv    -----     <div>Olen ostukorvis</div> */}
@@ -44,8 +50,12 @@ localhost:3000/ostukorv    -----     <div>Olen ostukorvis</div> */}
         <Route path="ostukorv" element={ <Ostukorv /> } />
         <Route path="meist" element={ <Meist /> } />
         <Route path="lisa-toode" element={ <LisaToode /> } />
+        <Route path="halda-tooteid" element={ <HaldaTooteid /> } />
         <Route path="seaded" element={ <Seaded /> } />
         <Route path="poed" element={ <Poed /> } />
+        <Route path="toode/:tooteNimi" element={ <YksikToode /> } />
+        <Route path="muuda/:tooteNimi" element={ <MuudaToode /> } />
+        <Route path="*" element={ <div>404</div> } />
       </Routes>
     </div>
   );
