@@ -1,6 +1,11 @@
+import AdminNavbar from "../../components/AdminNavbar";
 
 function MaintainCategories() {
-  return ( <div>MC</div> );
+  return ( 
+  <div>
+    <AdminNavbar />
+    MC
+  </div> );
 }
 
 export default MaintainCategories;

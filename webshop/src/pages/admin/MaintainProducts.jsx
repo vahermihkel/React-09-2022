@@ -1,6 +1,11 @@
+import AdminNavbar from "../../components/AdminNavbar";
 
 function MaintainProducts() {
-  return ( <div>MP</div> );
+  return ( 
+    <div>
+      <AdminNavbar />
+      MP
+    </div> );
 }
 
 export default MaintainProducts;

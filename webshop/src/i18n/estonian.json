@@ -1,0 +1,10 @@
+{
+  "nav.admin": "Administraatori vaatesse",
+  "nav.cart": "Ostukorvi",
+  "nav.about-us": "Meist",
+  "nav.shops": "Meie poed",
+  "admin.add-product": "Lisa toode",
+  "admin.maintain-products": "Halda tooteid",
+  "admin.maintain-categories": "Halda kategooriaid",
+  "admin.maintain-shops": "Halda poode"
+}

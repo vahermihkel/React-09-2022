@@ -1,6 +1,11 @@
+import AdminNavbar from "../../components/AdminNavbar";
 
 function EditProduct() {
-  return ( <div>EP</div> );
+  return ( 
+    <div>
+      <AdminNavbar />
+      EP
+    </div> );
 }
 
 export default EditProduct;
