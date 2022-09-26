@@ -19,3 +19,11 @@ root.render(
 // muutuja = 5;
 // color: red;
 // color: #ff2800;
+
+// vajadusel proovitöid
+
+// Wordpressi projekt
+
+// lõpuprojekt
+// spetsiifilisi nõudeid ei ole - nõue on et on Reactis kirjutatud
+// võiks seda esitleda viimasel päeval
