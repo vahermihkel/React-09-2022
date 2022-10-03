@@ -1,6 +1,17 @@
-import productsFromFile from '../data/products.json';
+import { useEffect, useState } from 'react';
+// import productsFromFile from '../data/products.json';
 
+          // extends React.component
 function HomePage() {
+  // constructor()
+  const [products, setProducts] = useState([]);
+
+  // componentDidMount()
+  useEffect(() => {
+    fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+      .then(res => res.json())
+      .then(json => setProducts(json))
+  }, []);
 
   const addToCart = (productClicked) => {
     // KODUS ---- samamoodi nagu siiamaani teinud oleme
@@ -9,7 +20,7 @@ function HomePage() {
 
   return ( 
     <div>
-      {productsFromFile.map(element => 
+      {products.map(element => 
         <div>
           <img src={element.image} alt="" />
           <div>{element.name}</div>
