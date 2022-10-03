@@ -1,12 +1,22 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminNavbar from "../../components/AdminNavbar";
-import productsFromFile from "../../data/products.json";
+import { ThreeDots } from "react-loader-spinner"; // <---------------
+// import productsFromFile from "../../data/products.json";
 
 function EditProduct() {
   const { id } = useParams();      // element / product / e
-  const productFound = productsFromFile.find(element => element.id === Number(id));
-  const productIndex = productsFromFile.indexOf(productFound);
+  const [products, setProducts] = useState([]);
+  const productFound = products.find(element => element.id === Number(id));
+  const productIndex = products.indexOf(productFound);
+  const [loading, setLoading] = useState(true); // <---------------
+
+  useEffect(() => {
+    fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+      .then(res => res.json())
+      .then(json => setProducts(json))
+      .finally(() => setLoading(false))
+  }, []);
 
   // const productIndex2 = productsFromFile.findIndex(element => element.id === Number(id));
   // const productFound2 = productsFromFile[productIndex2];
@@ -40,28 +50,58 @@ function EditProduct() {
       "active": activeRef.current.checked
     }
 
-    productsFromFile[productIndex] = newProduct;
-    navigate("/admin/maintain-products");
+    fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products/"+ productIndex +".json", {
+      method: "PUT",
+      body: JSON.stringify(newProduct)
+    }).then(() => navigate("/admin/maintain-products"))
+
+    // products[productIndex] = newProduct;
+    // fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json", {
+    //   method: "PUT",
+    //   body: JSON.stringify(products)
+    // }).then(() => navigate("/admin/maintain-products"))
+
+       // navigate("") <-- see peab olema .then sees, sellepärast et muidu ta 
+          // navigeerib enne ära kui ta on jõudnud API otspunkti kaudu toodet uuendada
+          // -- sellepärast, et fetch on asünkroone (lubab koodil edasi liikuda)
   }
 
   return (                                                          
     <div>
       <AdminNavbar />
-      <label>ID</label> <br />
-      <input ref={idRef} defaultValue={productFound.id} type="number" /> <br />
-      <label>Name</label> <br />
-      <input ref={nameRef} defaultValue={productFound.name} type="text" /> <br />
-      <label>Price</label> <br />
-      <input ref={priceRef} defaultValue={productFound.price} type="number" /> <br />
-      <label>Image</label> <br />
-      <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
-      <label>Category</label> <br />
-      <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br />
-      <label>Description</label> <br />
-      <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
-      <label>Active</label> <br />
-      <input ref={activeRef} defaultChecked={productFound.active} type="checkbox" /> <br />
-      <button onClick={updateProduct}>Muuda</button>
+      {/* string - ""  <--- false 
+          string - " "  <--- true
+          number - 0 <--- false
+          number - mitte0 <--- true */}
+      <ThreeDots 
+        height="80" 
+        width="80" 
+        radius="9"
+        color="#000" 
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{}}
+        wrapperClassName=""
+        visible={loading === true}
+        />
+      { productFound !== undefined && 
+      <div>
+        <label>ID</label> <br />
+        <input ref={idRef} defaultValue={productFound.id} type="number" /> <br />
+        <label>Name</label> <br />
+        <input ref={nameRef} defaultValue={productFound.name} type="text" /> <br />
+        <label>Price</label> <br />
+        <input ref={priceRef} defaultValue={productFound.price} type="number" /> <br />
+        <label>Image</label> <br />
+        <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
+        <label>Category</label> <br />
+        <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br />
+        <label>Description</label> <br />
+        <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
+        <label>Active</label> <br />
+        <input ref={activeRef} defaultChecked={productFound.active} type="checkbox" /> <br />
+        <button onClick={updateProduct}>Muuda</button>
+      </div>}
+      { productFound === undefined && <div>Toodet ei leitud!</div>}
     </div> );
 }
 
