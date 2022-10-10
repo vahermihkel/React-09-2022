@@ -49,7 +49,7 @@ function HomePage() {
         visible={loading === true}
         />
       {products.map(element => 
-        <div>
+        <div key={element.id}>
           <img src={element.image} alt="" />
           <div>{element.name}</div>
           <div>{element.price}</div>
