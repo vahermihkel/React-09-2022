@@ -18,8 +18,22 @@ function HomePage() {
   //  ta ikkagi läheb uuesti seda sisu tegema
 
   const addToCart = (productClicked) => {
-    // KODUS ---- samamoodi nagu siiamaani teinud oleme
-    // sessionStorage.setItem("cart", cart);
+    let cartSS = sessionStorage.getItem("cart");
+    cartSS = JSON.parse(cartSS) || [];
+
+          // {"id":14753896,"image":"https://i.ebayimg.com/thumbs/images/g/NE4AAOSwU3lh1Wz1/s-l225.webp","name":"50ft LED Strip","price":17.94,"description":"50ft LED Strip Lights USB 5050 RGB TV Back light Bluetooth Remote for Room 1-15m","category":"led","active":true}
+          // [{product: {id: 147,name: "50FT"}, quantity: 1}, {product: {id: 148,name: "55FT"}, quantity: 1}]
+    const index = cartSS.findIndex(element => element.product.id === productClicked.id);
+    if (index >= 0) {
+      cartSS[index].quantity++;
+      // cartSS[index].quantity += 1;
+      // cartSS[index].quantity = cartSS[index].quantity + 1;
+    } else {
+      cartSS.push({product: productClicked, quantity: 1});
+    }
+
+    cartSS = JSON.stringify(cartSS);
+    sessionStorage.setItem("cart", cartSS);
   }
 
   return ( 
