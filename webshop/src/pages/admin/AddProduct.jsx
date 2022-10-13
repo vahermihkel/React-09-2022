@@ -42,11 +42,13 @@ function AddProduct() {
     })
   }
 
+  const checkIfIdUnique = () => {}
+
   return ( 
     <div>
       <AdminNavbar />
       <label>ID</label> <br />
-      <input ref={idRef} type="number" /> <br />
+      <input onChange={checkIfIdUnique} ref={idRef} type="number" /> <br />
       <label>Name</label> <br />
       <input ref={nameRef} type="text" /> <br />
       <label>Price</label> <br />

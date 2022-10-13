@@ -6,5 +6,7 @@
   "admin.add-product": "Add product",
   "admin.maintain-products": "Maintain products",
   "admin.maintain-categories": "Maintain categories",
-  "admin.maintain-shops": "Maintain shops"
+  "admin.maintain-shops": "Maintain shops",
+  "product.pcs": "pcs",
+  "btn.edit": "Edit"
 }

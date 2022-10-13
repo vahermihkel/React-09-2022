@@ -6,5 +6,7 @@
   "admin.add-product": "Lisa toode",
   "admin.maintain-products": "Halda tooteid",
   "admin.maintain-categories": "Halda kategooriaid",
-  "admin.maintain-shops": "Halda poode"
+  "admin.maintain-shops": "Halda poode",
+  "product.pcs": "tk",
+  "btn.edit": "Muuda"
 }
