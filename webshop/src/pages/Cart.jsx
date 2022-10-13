@@ -71,6 +71,7 @@ function Cart() {
   }
 
   const pay = () => {
+    // setPaymentLoading(true);
     // paneme andmebaasi (maksmata kujul) -> saame orderi numbri
     const paymentData = {
       "api_username": "92ddcfab96e34a5f",
@@ -122,6 +123,7 @@ function Cart() {
       { selectedPM.NAME !== undefined && <div>{selectedPM.NAME} - {selectedPM.A1_NAME}</div>}
       <br />
       { selectedPM.NAME !== undefined && <button onClick={pay}>Maksma</button>}
+      {/* paymentLoading === true && <Spinner /> */}
     </div> );
 }
 

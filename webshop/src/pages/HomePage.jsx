@@ -1,19 +1,27 @@
 import { useEffect, useState } from 'react';
-import { ThreeDots } from "react-loader-spinner"; // 1)
+import { ThreeDots } from "react-loader-spinner"; 
 // import productsFromFile from '../data/products.json';
 
           // extends React.component
 function HomePage() {
   // constructor()
+  const [dbProducts, setDbProducts] = useState([]);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);  // 2)
+  const [loading, setLoading] = useState(true);
+  // [{name: "Nobe", category: "car"}, {name: "BMW", category: "car"}, {name: "Tesla", category: "car"}]
+  // .map(element => element.name + "-EST")    ----->    Nobe-EST     BMW-EST     Tesla-EST
+  // ["car", "car", "car"]
+  const categories = [...new Set(dbProducts.map(element => element.category))];
 
   // componentDidMount()
   useEffect(() => { // <- seda sisu mis siin funktsioonis on, tehakse täpselt 1x
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
       .then(res => res.json())
-      .then(json => setProducts(json))
-      .finally(() => setLoading(false)) // 3)
+      .then(json => {
+        setProducts(json);
+        setDbProducts(json);
+      })
+      .finally(() => setLoading(false)) 
   }, []); // <- siin loetletakse muutujaid mille väärtuse muutudes
   //  ta ikkagi läheb uuesti seda sisu tegema
 
@@ -36,8 +44,44 @@ function HomePage() {
     sessionStorage.setItem("cart", cartSS);
   }
 
+  const sortAZ = () => {
+    products.sort((a,b)=> a.name.localeCompare(b.name));
+    setProducts(products.slice());
+  }
+
+  const sortZA = () => {
+    products.sort((a,b)=> b.name.localeCompare(a.name));
+    setProducts(products.slice());
+  }
+
+  const sortPriceAsc = () => {
+    products.sort((a,b)=> a.price - b.price);
+    setProducts(products.slice());
+  }
+
+  const sortPriceDesc = () => {
+    products.sort((a,b)=> b.price - a.price);
+    setProducts(products.slice());
+  }
+
+  const showByCategory = (categoryClicked) => {
+    //    .filter(element => element.includes(searchedRef.current.vale))
+    //    .filter(element => element.startsWith("M"))
+    //    .filter(element => element.endWith("y"))
+    //    .filter(element => element.length === 6)
+    //    .filter(element => element.includes("mäe"))
+    const result = dbProducts.filter(element => element.category === categoryClicked);
+    setProducts(result);
+  }
+
   return ( 
     <div>
+      {categories.map(element => <button onClick={() => showByCategory(element)}>{element}</button>)}
+      <br /><br /><br />
+      <button onClick={sortAZ}>Sorteeri A-Z</button>
+      <button onClick={sortZA}>Sorteeri Z-A</button>
+      <button onClick={sortPriceAsc}>Sorteeri hind kasvavalt</button>
+      <button onClick={sortPriceDesc}>Sorteeri hind kahanevalt</button>
       <ThreeDots 
         height="80" 
         width="80" 

@@ -117,9 +117,9 @@ function EditProduct() {
     </div> );
 }
 
-  {/* string - ""  <--- false 
+  /* string - ""  <--- false 
           string - " "  <--- true
           number - 0 <--- false
-          number - mitte0 <--- true */}
+          number - mitte0 <--- true */
 
 export default EditProduct;
