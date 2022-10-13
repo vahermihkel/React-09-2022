@@ -42,11 +42,21 @@ function AddProduct() {
     })
   }
 
-  const checkIfIdUnique = () => {}
+  const [idUnique, setIdUnique] = useState(true);
+
+  const checkIfIdUnique = () => {
+    const found = products.find(element => element.id === Number(idRef.current.value));
+    if (found === undefined) {
+      setIdUnique(true);
+    } else {
+      setIdUnique(false);
+    }
+  }
 
   return ( 
     <div>
       <AdminNavbar />
+      { idUnique === false && <div>Sisestatud ID ei ole unikaalne!</div>}
       <label>ID</label> <br />
       <input onChange={checkIfIdUnique} ref={idRef} type="number" /> <br />
       <label>Name</label> <br />
@@ -61,7 +71,7 @@ function AddProduct() {
       <input ref={descriptionRef} type="text" /> <br />
       <label>Active</label> <br />
       <input ref={activeRef} type="checkbox" /> <br />
-      <button onClick={addNewProduct}>Add new</button>
+      <button disabled={idUnique === false} onClick={addNewProduct}>Add new</button>
     </div> );
 }
 

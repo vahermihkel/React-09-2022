@@ -66,13 +66,24 @@ function EditProduct() {
           // -- sellepärast, et fetch on asünkroone (lubab koodil edasi liikuda)
   }
 
+  const [idUnique, setIdUnique] = useState(true);
+
+  const checkIfIdUnique = () => {
+    if (idRef.current.value === id) {
+      setIdUnique(true);
+    } else {
+      const found = products.find(element => element.id === Number(idRef.current.value));
+      if (found === undefined) {
+        setIdUnique(true);
+      } else {
+        setIdUnique(false);
+      }
+    }
+  }
+
   return (                                                          
     <div>
       <AdminNavbar />
-      {/* string - ""  <--- false 
-          string - " "  <--- true
-          number - 0 <--- false
-          number - mitte0 <--- true */}
       <ThreeDots 
         height="80" 
         width="80" 
@@ -85,8 +96,9 @@ function EditProduct() {
         />
       { productFound !== undefined && 
       <div>
+        { idUnique === false && <div>Sisestatud ID ei ole unikaalne!</div>}
         <label>ID</label> <br />
-        <input ref={idRef} defaultValue={productFound.id} type="number" /> <br />
+        <input onChange={checkIfIdUnique} ref={idRef} defaultValue={productFound.id} type="number" /> <br />
         <label>Name</label> <br />
         <input ref={nameRef} defaultValue={productFound.name} type="text" /> <br />
         <label>Price</label> <br />
@@ -99,10 +111,15 @@ function EditProduct() {
         <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
         <label>Active</label> <br />
         <input ref={activeRef} defaultChecked={productFound.active} type="checkbox" /> <br />
-        <button onClick={updateProduct}>Muuda</button>
+        <button disabled={idUnique === false} onClick={updateProduct}>Muuda</button>
       </div>}
       { productFound === undefined && <div>Toodet ei leitud!</div>}
     </div> );
 }
+
+  {/* string - ""  <--- false 
+          string - " "  <--- true
+          number - 0 <--- false
+          number - mitte0 <--- true */}
 
 export default EditProduct;
