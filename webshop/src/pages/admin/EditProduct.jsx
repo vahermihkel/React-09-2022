@@ -7,6 +7,7 @@ import { ThreeDots } from "react-loader-spinner"; // <---------------
 function EditProduct() {
   const { id } = useParams();      // element / product / e
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const productFound = products.find(element => element.id === Number(id));
   const productIndex = products.indexOf(productFound);
   const [loading, setLoading] = useState(true); // <---------------
@@ -14,8 +15,12 @@ function EditProduct() {
   useEffect(() => {
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
       .then(res => res.json())
-      .then(json => setProducts(json))
+      .then(json => setProducts(json || []))
       .finally(() => setLoading(false))
+
+    fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/categories.json")
+      .then(res => res.json())
+      .then(json => setCategories(json || []))
   }, []);
 
   // const productIndex2 = productsFromFile.findIndex(element => element.id === Number(id));
@@ -106,7 +111,10 @@ function EditProduct() {
         <label>Image</label> <br />
         <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
         <label>Category</label> <br />
-        <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br />
+        <select ref={categoryRef} defaultValue={productFound.category}>
+          {categories.map(element => <option key={element.id}>{element.name}</option>)}
+        </select> <br />
+        {/* <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br /> */}
         <label>Description</label> <br />
         <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
         <label>Active</label> <br />

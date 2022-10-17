@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 function AddProduct() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const idRef = useRef();
   const nameRef = useRef();
   const priceRef = useRef();
@@ -14,7 +16,11 @@ function AddProduct() {
   useEffect(() => {
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
       .then(res => res.json())
-      .then(json => setProducts(json))
+      .then(json => setProducts(json || []))
+
+    fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/categories.json")
+      .then(res => res.json())
+      .then(json => setCategories(json || []))
   }, []);
 
   const addNewProduct = () => {
@@ -66,7 +72,10 @@ function AddProduct() {
       <label>Image</label> <br />
       <input ref={imageRef} type="text" /> <br />
       <label>Category</label> <br />
-      <input ref={categoryRef} type="text" /> <br />
+      {/* <input ref={categoryRef} type="text" /> <br /> */}
+      <select ref={categoryRef}>
+        {categories.map(element => <option key={element.id}>{element.name}</option>)}
+      </select> <br />
       <label>Description</label> <br />
       <input ref={descriptionRef} type="text" /> <br />
       <label>Active</label> <br />
