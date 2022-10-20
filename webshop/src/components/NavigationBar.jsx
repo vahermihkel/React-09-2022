@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useContext } from 'react';
+import CartSumContext from '../store/CartSumContext';
+
 
 function NavigationBar() {
   const { t, i18n } = useTranslation();
+  const cartSumCtx = useContext(CartSumContext);
 
   const changeLang = (newLang) => {
     i18n.changeLanguage(newLang);
@@ -20,6 +24,7 @@ function NavigationBar() {
             <Nav.Link as={Link} to="about-us">{t('nav.about-us')}</Nav.Link>
             <Nav.Link as={Link} to="shops">{t('nav.shops')}</Nav.Link>
           </Nav>
+          <div>{cartSumCtx.cartSum}</div>
           <img className="lang" onClick={() => changeLang("en")} src={require("../images/english.png")} alt="" />
           <img className="lang" onClick={() => changeLang("ee")} src={require("../images/estonia.png")}  alt="" />
           <img className="lang" onClick={() => changeLang("ru")} src={require("../images/russia.png")}  alt="" />

@@ -1,18 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
+import ParcelMachines from "../components/ParcelMachines";
+import Payment from "../components/Payment";
 import cartStyles from "../css/Cart.module.css";
+import CartSumContext from '../store/CartSumContext';
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")) || []);
-  const [parcelMachines, setParcelMachines] = useState([]);
-
-  useEffect(() => {
-    fetch("https://www.omniva.ee/locations.json")
-      .then(res => res.json())
-      .then(json => {
-        json = json.filter(element => element.A0_NAME === "EE");
-        setParcelMachines(json);
-      })
-  }, []);
+  const [selectedPM, setSelectedPM] = useState({});
+  const cartSumCtx = useContext(CartSumContext);
 
   const decreaseQuantity = (index) => {
     // ["Nobe", "BMW", "Tesla"][1] = "Opel";  ---> ["Nobe", "Opel", "Tesla"]
@@ -24,12 +19,14 @@ function Cart() {
 
     setCart(cart.slice()); // HTMLi uuenduseks
     sessionStorage.setItem("cart", JSON.stringify(cart)); // SS uuenduseks
+    cartSumCtx.setCartSum(calculateCartSum());
   }
 
   const increaseQuantity = (index) => {
     cart[index].quantity++;
     setCart(cart.slice()); 
-    sessionStorage.setItem("cart", JSON.stringify(cart)); 
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+    cartSumCtx.setCartSum(calculateCartSum()); 
   }
 
   const remove = (index) => {
@@ -38,14 +35,15 @@ function Cart() {
       setSelectedPM({});
     }
     setCart(cart.slice()); 
-    sessionStorage.setItem("cart", JSON.stringify(cart)); 
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+    cartSumCtx.setCartSum(calculateCartSum()); 
   }
 
   const calculateCartSum = () => {
     let cartSum = 0;
     // cart.forEach(element => cartSum = cartSum + element.product.price * element.quantity)
     cart.forEach(element => cartSum += element.product.price * element.quantity)
-    return cartSum;
+    return cartSum.toFixed(2);
   }
 
   const calculateCartItems = () => {
@@ -58,40 +56,7 @@ function Cart() {
     setCart([]); 
     sessionStorage.setItem("cart", JSON.stringify([])); 
     setSelectedPM({});
-  }
-
-  const pmRef = useRef(); // <- useRef import ka
-
-  const [selectedPM, setSelectedPM] = useState({});
-
-  const pmChanged = () => {
-    // console.log(event.target.value)
-    const parcelMachineFound = parcelMachines.find(element => element.NAME === pmRef.current.value);
-    setSelectedPM(parcelMachineFound);
-  }
-
-  const pay = () => {
-    // setPaymentLoading(true);
-    // paneme andmebaasi (maksmata kujul) -> saame orderi numbri
-    const paymentData = {
-      "api_username": "92ddcfab96e34a5f",
-      "account_name": "EUR3D1",
-      "amount": calculateCartSum(),
-      "order_reference": Math.random() * 99999999,
-      "nonce": "a9b7f7ekjk" + Math.random() * 99999999 + new Date(),
-      "timestamp": new Date(),
-      "customer_url": "https://react-0922.web.app/tellimus"
-      }
-    fetch("https://igw-demo.every-pay.com/api/v4/payments/oneoff",{
-      "method": "POST",
-      "body": JSON.stringify(paymentData),
-      "headers": {
-        "Authorization": "Basic OTJkZGNmYWI5NmUzNGE1Zjo4Y2QxOWU5OWU5YzJjMjA4ZWU1NjNhYmY3ZDBlNGRhZA==",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(json => window.location.href = json.payment_link)
+    cartSumCtx.setCartSum(0);
   }
 
   return ( 
@@ -115,16 +80,18 @@ function Cart() {
           <div className={cartStyles.total}>{(element.product.price * element.quantity).toFixed(2)} €</div>
           <img className={cartStyles.button} onClick={() => remove(index)} src={require("../images/remove.png")} alt="" />
         </div> ) }
-      { cart.length > 0 && <div className={cartStyles.sum}>Total: {calculateCartSum().toFixed(2)} €</div> }
+      { cart.length > 0 && <div className={cartStyles.sum}>Total: {calculateCartSum()} €</div> }
 
-      { cart.length > 0 && <select ref={pmRef} onChange={pmChanged}>
-        { parcelMachines.map(element => <option key={element.NAME}>{element.NAME}</option>) }
-      </select>}
+      <ParcelMachines cart={cart} updatePM={setSelectedPM} />
       { selectedPM.NAME !== undefined && <div>{selectedPM.NAME} - {selectedPM.A1_NAME}</div>}
       <br />
-      { selectedPM.NAME !== undefined && <button onClick={pay}>Maksma</button>}
+      { selectedPM.NAME !== undefined && <Payment total={calculateCartSum()} /> }
       {/* paymentLoading === true && <Spinner /> */}
     </div> );
 }
 
 export default Cart;
+
+// webshopis prooviks hoida kõik failid alla 100 rea
+// ideaalis proovime hoida alla 150 rea
+// kui tuleb ühes failis üle 200 rea

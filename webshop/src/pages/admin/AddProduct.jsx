@@ -1,5 +1,6 @@
 import AdminNavbar from "../../components/AdminNavbar";
 import { useEffect, useRef, useState } from "react";
+import FileUpload from "../../components/FileUpload";
 
 function AddProduct() {
   const [products, setProducts] = useState([]);
@@ -70,7 +71,8 @@ function AddProduct() {
       <label>Price</label> <br />
       <input ref={priceRef} type="number" /> <br />
       <label>Image</label> <br />
-      <input ref={imageRef} type="text" /> <br />
+      {/* <input ref={imageRef} type="text" /> <br /> */}
+      <FileUpload />
       <label>Category</label> <br />
       {/* <input ref={categoryRef} type="text" /> <br /> */}
       <select ref={categoryRef}>

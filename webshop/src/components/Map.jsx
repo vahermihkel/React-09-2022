@@ -23,7 +23,13 @@ function Map(props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[59.4231, 24.7991]}>
+      {props.shopMarkers.map((element, index) => 
+        <Marker key={index} position={[element.latitude, element.longitude  ]}>
+          <Popup>
+            {element.name} <br /> {element.openTime}
+          </Popup>
+        </Marker>)}
+      {/* <Marker position={[59.4231, 24.7991]}>
         <Popup>
           Ülemiste keskus. <br /> Avatud 9-20
         </Popup>
@@ -37,7 +43,7 @@ function Map(props) {
         <Popup>
           Helsinki keskus. <br /> Avatud 8-22
         </Popup>
-      </Marker>
+      </Marker> */}
     </MapContainer>
   </div>)
 }

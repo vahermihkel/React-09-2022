@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ThreeDots } from "react-loader-spinner"; 
 import Pagination from 'react-bootstrap/Pagination';
+import SortButtons from '../components/SortButtons';
+import Product from '../components/Product';
 // import productsFromFile from '../data/products.json';
 
 // lehele tulles???
@@ -39,48 +41,6 @@ function HomePage() {
   }, []); // <- siin loetletakse muutujaid mille väärtuse muutudes
   //  ta ikkagi läheb uuesti seda sisu tegema
 
-  const addToCart = (productClicked) => {
-    let cartSS = sessionStorage.getItem("cart");
-    cartSS = JSON.parse(cartSS) || [];
-
-          // {"id":14753896,"image":"https://i.ebayimg.com/thumbs/images/g/NE4AAOSwU3lh1Wz1/s-l225.webp","name":"50ft LED Strip","price":17.94,"description":"50ft LED Strip Lights USB 5050 RGB TV Back light Bluetooth Remote for Room 1-15m","category":"led","active":true}
-          // [{product: {id: 147,name: "50FT"}, quantity: 1}, {product: {id: 148,name: "55FT"}, quantity: 1}]
-    const index = cartSS.findIndex(element => element.product.id === productClicked.id);
-    if (index >= 0) {
-      cartSS[index].quantity++;
-      // cartSS[index].quantity += 1;
-      // cartSS[index].quantity = cartSS[index].quantity + 1;
-    } else {
-      cartSS.push({product: productClicked, quantity: 1});
-    }
-
-    cartSS = JSON.stringify(cartSS);
-    sessionStorage.setItem("cart", cartSS);
-  }
-
-  const sortAZ = () => {
-    categoryProducts.sort((a,b)=> a.name.localeCompare(b.name));
-    setProducts(categoryProducts.slice(0,30));
-    setActivePage(1);
-  }
-
-  const sortZA = () => {
-    categoryProducts.sort((a,b)=> b.name.localeCompare(a.name));
-    setProducts(categoryProducts.slice(0,30));
-    setActivePage(1);
-  }
-
-  const sortPriceAsc = () => {
-    categoryProducts.sort((a,b)=> a.price - b.price);
-    setProducts(categoryProducts.slice(0,30));
-    setActivePage(1);
-  }
-
-  const sortPriceDesc = () => {
-    categoryProducts.sort((a,b)=> b.price - a.price);
-    setProducts(categoryProducts.slice(0,30));
-    setActivePage(1);
-  }
 
   const showByCategory = (categoryClicked) => {
     //    .filter(element => element.includes(searchedRef.current.vale))
@@ -113,10 +73,10 @@ function HomePage() {
       <div>{categoryProducts.length} tk</div>
       {categories.map(element => <button onClick={() => showByCategory(element)}>{element}</button>)}
       <br /><br /><br />
-      <button onClick={sortAZ}>Sorteeri A-Z</button>
-      <button onClick={sortZA}>Sorteeri Z-A</button>
-      <button onClick={sortPriceAsc}>Sorteeri hind kasvavalt</button>
-      <button onClick={sortPriceDesc}>Sorteeri hind kahanevalt</button>
+      <SortButtons
+        categoryProducts={categoryProducts}
+        setProducts={setProducts}
+        setActivePage={setActivePage} />
       <ThreeDots 
         height="80" 
         width="80" 
@@ -128,12 +88,8 @@ function HomePage() {
         visible={loading === true}
         />
       {products.map(element => 
-        <div key={element.id}>
-          <img src={element.image} alt="" />
-          <div>{element.name}</div>
-          <div>{element.price}</div>
-          <button onClick={() => addToCart(element)}>Add to cart</button>
-        </div>)}
+          <Product element={element} />
+        )}
     </div> );
 }
 

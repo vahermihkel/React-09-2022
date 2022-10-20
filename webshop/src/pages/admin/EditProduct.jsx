@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminNavbar from "../../components/AdminNavbar";
-import { ThreeDots } from "react-loader-spinner"; // <---------------
-// import productsFromFile from "../../data/products.json";
+import { ThreeDots } from "react-loader-spinner";
 
 function EditProduct() {
-  const { id } = useParams();      // element / product / e
+  const { id } = useParams(); 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const productFound = products.find(element => element.id === Number(id));
   const productIndex = products.indexOf(productFound);
-  const [loading, setLoading] = useState(true); // <---------------
+  const [loading, setLoading] = useState(true); 
+  const [idUnique, setIdUnique] = useState(true);
+  const idRef = useRef();
+  const nameRef = useRef();
+  const priceRef = useRef();
+  const imageRef = useRef();
+  const categoryRef = useRef();
+  const descriptionRef = useRef();
+  const activeRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
@@ -23,28 +31,7 @@ function EditProduct() {
       .then(json => setCategories(json || []))
   }, []);
 
-  // const productIndex2 = productsFromFile.findIndex(element => element.id === Number(id));
-  // const productFound2 = productsFromFile[productIndex2];
-
-                                                      // 14753896 === "14753896"
-
-                                                      // element.id === Number(id)
-                                                      // 14753896   === 14753896
-
-                                                      // element.id.toString() === id
-                                                      // "14753896" === "14753896"
-  const idRef = useRef();
-  const nameRef = useRef();
-  const priceRef = useRef();
-  const imageRef = useRef();
-  const categoryRef = useRef();
-  const descriptionRef = useRef();
-  const activeRef = useRef();
-  const navigate = useNavigate();
-
-  // muutmine eesti keelse järgi
   const updateProduct = () => {
-
     const newProduct = {
       "id": Number(idRef.current.value),
       "image": imageRef.current.value,
@@ -54,24 +41,11 @@ function EditProduct() {
       "category": categoryRef.current.value,
       "active": activeRef.current.checked
     }
-
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products/"+ productIndex +".json", {
       method: "PUT",
       body: JSON.stringify(newProduct)
     }).then(() => navigate("/admin/maintain-products"))
-
-    // products[productIndex] = newProduct;
-    // fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json", {
-    //   method: "PUT",
-    //   body: JSON.stringify(products)
-    // }).then(() => navigate("/admin/maintain-products"))
-
-       // navigate("") <-- see peab olema .then sees, sellepärast et muidu ta 
-          // navigeerib enne ära kui ta on jõudnud API otspunkti kaudu toodet uuendada
-          // -- sellepärast, et fetch on asünkroone (lubab koodil edasi liikuda)
   }
-
-  const [idUnique, setIdUnique] = useState(true);
 
   const checkIfIdUnique = () => {
     if (idRef.current.value === id) {
@@ -114,7 +88,6 @@ function EditProduct() {
         <select ref={categoryRef} defaultValue={productFound.category}>
           {categories.map(element => <option key={element.id}>{element.name}</option>)}
         </select> <br />
-        {/* <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br /> */}
         <label>Description</label> <br />
         <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
         <label>Active</label> <br />
@@ -124,10 +97,5 @@ function EditProduct() {
       { productFound === undefined && <div>Toodet ei leitud!</div>}
     </div> );
 }
-
-  /* string - ""  <--- false 
-          string - " "  <--- true
-          number - 0 <--- false
-          number - mitte0 <--- true */
 
 export default EditProduct;
