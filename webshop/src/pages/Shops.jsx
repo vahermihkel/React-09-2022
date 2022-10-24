@@ -9,7 +9,7 @@ function Shops() {
   useEffect(() => {
     fetch(dbUrl)
       .then(response => response.json())
-      .then(responseBody => setShops(responseBody));
+      .then(responseBody => setShops(responseBody || []));
   },[]);
 
   return (<div>

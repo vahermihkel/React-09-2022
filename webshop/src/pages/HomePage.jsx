@@ -71,7 +71,7 @@ function HomePage() {
         )}
       </Pagination>
       <div>{categoryProducts.length} tk</div>
-      {categories.map(element => <button onClick={() => showByCategory(element)}>{element}</button>)}
+      {categories.map(element => <button key={element} onClick={() => showByCategory(element)}>{element}</button>)}
       <br /><br /><br />
       <SortButtons
         categoryProducts={categoryProducts}
@@ -88,7 +88,7 @@ function HomePage() {
         visible={loading === true}
         />
       {products.map(element => 
-          <Product element={element} />
+          <Product key={element.id} element={element} />
         )}
     </div> );
 }

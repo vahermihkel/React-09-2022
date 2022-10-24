@@ -56,7 +56,7 @@ function Cart() {
     setCart([]); 
     sessionStorage.setItem("cart", JSON.stringify([])); 
     setSelectedPM({});
-    cartSumCtx.setCartSum(0);
+    cartSumCtx.setCartSum("0.00");
   }
 
   return ( 
