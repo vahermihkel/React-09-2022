@@ -15,12 +15,12 @@ function NavigationBar() {
     localStorage.setItem("language", newLang);
   }
 
-  const login = () => {
-    authCtx.setIsLoggedIn(true);
-  }
+  // const login = () => {
+  //   authCtx.setIsLoggedIn(true);
+  // }
 
   const logout = () => {
-    authCtx.setIsLoggedIn(false);
+    authCtx.logout();
   }
 
   return ( 

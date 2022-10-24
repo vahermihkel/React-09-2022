@@ -9,10 +9,11 @@ function AddProduct() {
   const idRef = useRef();
   const nameRef = useRef();
   const priceRef = useRef();
-  const imageRef = useRef();
+  // const imageRef = useRef();
   const categoryRef = useRef();
   const descriptionRef = useRef();
   const activeRef = useRef();
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     fetch("https://react-09-22-default-rtdb.europe-west1.firebasedatabase.app/products.json")
@@ -27,7 +28,8 @@ function AddProduct() {
   const addNewProduct = () => {
     const newProduct = {
       "id": Number(idRef.current.value),
-      "image": imageRef.current.value,
+      // "image": imageUrl === true ? imageRef.current.value : image,
+      "image": image,
       "name": nameRef.current.value,
       "price": Number(priceRef.current.value),
       "description": descriptionRef.current.value,
@@ -40,7 +42,7 @@ function AddProduct() {
       body: JSON.stringify(products)
     }).then(() => {
       idRef.current.value = "";
-      imageRef.current.value = "";
+      // imageRef.current.value = "";
       nameRef.current.value = "";
       priceRef.current.value = "";
       descriptionRef.current.value = "";
@@ -72,7 +74,7 @@ function AddProduct() {
       <input ref={priceRef} type="number" /> <br />
       <label>Image</label> <br />
       {/* <input ref={imageRef} type="text" /> <br /> */}
-      <FileUpload />
+      <FileUpload onSendPictureUrl={setImage} />
       <label>Category</label> <br />
       {/* <input ref={categoryRef} type="text" /> <br /> */}
       <select ref={categoryRef}>
