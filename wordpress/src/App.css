@@ -1,0 +1,26 @@
+/* 
+kui on vaid 1 css klass, siis võin App.css sees hoida
+
+igale failile oma css fail
+
+index.css faili võiksin panna globaalseid:
+  taust, kõikidele nuppudele värv
+*/
+
+.active-nav button {
+  text-decoration: underline;
+}
+
+.lang {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.lang:hover {
+  opacity: 0.7;
+}
+
+.map {
+  height: 300px;
+}
