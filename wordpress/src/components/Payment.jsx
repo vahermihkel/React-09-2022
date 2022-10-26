@@ -1,14 +1,40 @@
+import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 
 function Payment(props) {
+
+  const api = new WooCommerceRestApi({
+    url: "http://localhost/wordpress/",
+    consumerKey: "ck_4c8f2c8b92aefa4b33df8be478e13528787eb67f",
+    consumerSecret: "cs_e45336d10786862f37682920989b8b916a4843d3",
+    version: "wc/v3",
+    axiosConfig: {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  });
+
   const pay = () => {
-    // setPaymentLoading(true);
+    let cartItems = JSON.parse(sessionStorage.getItem("cart"));
+    cartItems = cartItems.map(element => 
+      { return {product_id: element.product.id, quantity: element.quantity} 
+    });
+
+    api.post("orders", {
+      "line_items": cartItems
+      // "line_items": JSON.parse(sessionStorage.getItem("cart")) || []
+    }).then(res => makePayment(res.data.id))
+  }
+
+  const makePayment = (orderId) => {
+    //  setPaymentLoading(true);
     // paneme andmebaasi (maksmata kujul) -> saame orderi numbri
     const paymentData = {
       "api_username": "92ddcfab96e34a5f",
       "account_name": "EUR3D1",
       "amount": props.total,
-      "order_reference": Math.random() * 99999999,
-      "nonce": "a9b7f7ekjk" + Math.random() * 99999999 + new Date(),
+      "order_reference": orderId,
+      "nonce": "a9b7f7ekjk" + orderId + new Date(),
       "timestamp": new Date(),
       "customer_url": "https://react-0922.web.app/tellimus"
       }

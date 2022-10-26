@@ -69,16 +69,17 @@ function Cart() {
       </div>
       { cart.map((element,index) => 
         <div className={cartStyles.product} key={index}>
-          <img className={cartStyles.image} src={element.product.image} alt="" />
+          { element.product.images[0] &&
+            <img className={cartStyles.image} src={element.product.images[0].src} alt="" />}
           <div className={cartStyles.name}>{element.product.name}</div>
           <div className={cartStyles.price}>{element.product.price} €</div>
           <div className={cartStyles.quantity}>
-            <img className={cartStyles.button} onClick={() => decreaseQuantity(index)} src={require("../images/minus.png")} alt="" />
+            <img className={cartStyles.button} onClick={() => decreaseQuantity(index)} src="/images/minus.png" alt="" />
             <div>{element.quantity} tk</div>
-            <img className={cartStyles.button} onClick={() => increaseQuantity(index)} src={require("../images/plus.png")} alt="" />
+            <img className={cartStyles.button} onClick={() => increaseQuantity(index)} src="/images/plus.png" alt="" />
           </div>
           <div className={cartStyles.total}>{(element.product.price * element.quantity).toFixed(2)} €</div>
-          <img className={cartStyles.button} onClick={() => remove(index)} src={require("../images/remove.png")} alt="" />
+          <img className={cartStyles.button} onClick={() => remove(index)} src="/images/remove.png" alt="" />
         </div> ) }
       { cart.length > 0 && <div className={cartStyles.sum}>Total: {calculateCartSum()} €</div> }
 

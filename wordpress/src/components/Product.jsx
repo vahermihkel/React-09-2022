@@ -24,7 +24,7 @@ function Product(props) {
 
   return ( 
     <div>
-      {props.element.images[0] && <img src={props.element.images[0].src} alt="" />}
+      {props.element.images[0] && <img className="product-img" src={props.element.images[0].src} alt="" />}
       <div>{props.element.name}</div>
       <div>{props.element.price}</div>
       <button onClick={() => addToCart(props.element)}>Add to cart</button>

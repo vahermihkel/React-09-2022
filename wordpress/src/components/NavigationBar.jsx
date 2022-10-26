@@ -37,9 +37,9 @@ function NavigationBar() {
             { authCtx.isLoggedIn === true && <Nav.Link onClick={logout}>Logi välja</Nav.Link>}
           </Nav>
           <div>{cartSumCtx.cartSum}</div>
-          <img className="lang" onClick={() => changeLang("en")} src={require("../images/english.png")} alt="" />
-          <img className="lang" onClick={() => changeLang("ee")} src={require("../images/estonia.png")}  alt="" />
-          <img className="lang" onClick={() => changeLang("ru")} src={require("../images/russia.png")}  alt="" />
+          <img className="lang" onClick={() => changeLang("en")} src="/images/english.png" alt="" />
+          <img className="lang" onClick={() => changeLang("ee")} src="/images/estonia.png"  alt="" />
+          <img className="lang" onClick={() => changeLang("ru")} src="/images/russia.png"  alt="" />
         </Container>
       </Navbar>
    );

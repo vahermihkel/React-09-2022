@@ -1,4 +1,4 @@
-
+import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 // siduge App.jsx sees /tellimus -> näeb seda lehte
 
 import { useEffect, useState } from "react";
@@ -27,6 +27,18 @@ function PaymentCompleted() {
         setPaymentState("failed");
       }
       // panen andmebaasi --> muudan tellimuse staatust: Failed / Processing
+      const api = new WooCommerceRestApi({
+        url: "http://localhost/wordpress",
+        consumerKey: "ck_d6d0ac010b6c7ad2ac19d2e06c5f0cf5a14b87ba",
+        consumerSecret: "cs_b508ece4284e6793c2b7803e957bc659e7226ecf",
+        version: "wc/v3"
+      });
+      api.post("orders/" + data.order_reference, {
+        "status": status
+      }).then(
+        res => console.log(res)
+      )
+
     })
 
   }, [payment_reference]);

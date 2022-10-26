@@ -24,3 +24,8 @@ index.css faili võiksin panna globaalseid:
 .map {
   height: 300px;
 }
+
+.product-img {
+  height: 200px;
+  width: 200px;
+}

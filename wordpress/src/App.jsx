@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useContext } from 'react';
 import AuthContext from './store/AuthContext';
+import PaymentCompleted from './pages/PaymentCompleted';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -33,6 +34,7 @@ function App() {
         <Route path="products/:id" element={ <SingleProduct /> } />
         <Route path="login" element={ <Login /> } />
         <Route path="signup" element={ <Signup /> } />
+        <Route path="tellimus" element={ <PaymentCompleted /> } />
         { authCtx.isLoggedIn === true && <>
           <Route path="admin" element={ <AdminHome /> } />
           <Route path="admin/add-product" element={ <AddProduct /> } />
